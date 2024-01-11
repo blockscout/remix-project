@@ -1,10 +1,7 @@
 on:
-  workflow_dispatch:
-    inputs:
-      build:
-        description: 'Build and publish the Docker image'
-        required: true
-        default: true
+  push:
+    branches:
+      - 'rimrakhimov/docker'
 
 name: Build docker (remix-project)
 
@@ -45,7 +42,7 @@ jobs:
        with:
          context: "."
          file: "Dockerfile-blockscout"
-         push: ${{ github.event.inputs.build == 'true' }}
+         push: true
          tags: ${{ github.ref }}
          labels: ${{ steps.meta.outputs.labels }}
          cache-from: type=gha
