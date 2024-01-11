@@ -1,0 +1,12 @@
+FROM node:20
+
+WORKDIR /app
+
+COPY . .
+RUN yarn install
+
+RUN yarn run build:libs
+RUN yarn run build
+RUN yarn run build:production
+
+CMD ["yarn", "run", "serve:production"]
