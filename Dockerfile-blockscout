@@ -1,12 +1,13 @@
-FROM node:20
+FROM node:20.10.0
 
 WORKDIR /app
 
-COPY . .
+COPY package.json yarn.lock .
 RUN yarn install
 
+COPY . .
+
 RUN yarn run build:libs
-RUN yarn run build
 RUN yarn run build:production
 
 CMD ["yarn", "run", "serve:production"]
