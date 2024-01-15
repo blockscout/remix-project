@@ -103,7 +103,6 @@ export const initWorkspace = (filePanelPlugin) => async (reducerDispatch: React.
           const target = `/${blockscoutUrl}/${contractAddress}`
 
           data = await fetchContractFromBlockscout(plugin, blockscoutUrl, contractAddress, target, false)
-          console.log(data)
           if (await workspaceExists(workspaceName)) workspaceProvider.setWorkspace(workspaceName)
           else await createWorkspaceTemplate(workspaceName, 'code-template')
           plugin.setWorkspace({ name: workspaceName, isLocalhost: false })
@@ -210,7 +209,7 @@ export const initWorkspace = (filePanelPlugin) => async (reducerDispatch: React.
       } else {
         _paq.push(['trackEvent', 'Storage', 'error', `Workspace in localstorage not found: ${localStorage.getItem("currentWorkspace")}`])
         await basicWorkspaceInit(workspaces, workspaceProvider)
-      }
+      } 
     } else {
       await basicWorkspaceInit(workspaces, workspaceProvider)
     }
