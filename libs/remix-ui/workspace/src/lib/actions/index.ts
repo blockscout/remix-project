@@ -119,7 +119,7 @@ export const initWorkspace = (filePanelPlugin) => async (reducerDispatch: React.
               filePathToOpen = filePath
             }
           })
-          plugin.call('notification', 'toast', `Added ${count} verified contract${count === 1 ? '' : 's'} from ${foundOnNetworks.join(',')} network${foundOnNetworks.length === 1 ? '' : 's'} of Etherscan for contract address ${contractAddress} !!`)
+          plugin.call('notification', 'toast', `Added ${count} verified contract${count === 1 ? '': 's'} from ${blockscoutUrl} network for contract address ${contractAddress} !!`)
         } catch (error) {
           await basicWorkspaceInit(workspaces, workspaceProvider)
         }
@@ -209,7 +209,7 @@ export const initWorkspace = (filePanelPlugin) => async (reducerDispatch: React.
       } else {
         _paq.push(['trackEvent', 'Storage', 'error', `Workspace in localstorage not found: ${localStorage.getItem("currentWorkspace")}`])
         await basicWorkspaceInit(workspaces, workspaceProvider)
-      } 
+      }
     } else {
       await basicWorkspaceInit(workspaces, workspaceProvider)
     }
