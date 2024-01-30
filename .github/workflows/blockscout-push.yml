@@ -1,0 +1,49 @@
+on:
+  push:
+    branches:
+      - 'rimrakhimov/docker'
+
+name: Build docker (remix-project)
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: blockscout/remix-project
+
+defaults:
+  run:
+    working-directory: .
+
+jobs:
+  push:
+   name: Docker build and docker push
+   timeout-minutes: 30
+   runs-on: ubuntu-latest
+   steps:
+     - name: Checkout repository
+       uses: actions/checkout@v2
+
+     - name: Login to GitHub Container Registry
+       uses: docker/login-action@v1
+       with:
+         registry: ${{ env.REGISTRY }}
+         username: ${{ github.actor }}
+         password: ${{ secrets.GITHUB_TOKEN }}
+
+     - name: Extract metadata for Docker
+       id: meta
+       uses: docker/metadata-action@v3
+       with:
+         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+     - name: Set up Docker Buildx
+       uses: docker/setup-buildx-action@v1
+     - name: Build and push
+       uses: docker/build-push-action@v2
+       with:
+         context: "."
+         file: "Dockerfile-blockscout"
+         push: true
+         tags: ${{ github.ref }}
+         labels: ${{ steps.meta.outputs.labels }}
+         cache-from: type=gha
+         cache-to: type=gha,mode=max
