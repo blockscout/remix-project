@@ -7,7 +7,6 @@ RUN yarn install
 
 COPY . .
 
-RUN yarn run build:libs
 RUN yarn run build:production
 
 CMD ["yarn", "run", "serve:production"]
